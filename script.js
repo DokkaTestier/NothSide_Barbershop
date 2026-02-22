@@ -38,28 +38,39 @@ gsap.from("h2, h1", {
 });
 
 // 2. Efecto para las "Tarjetas" o "Servicios"
-// Ideal para que tus servicios de corte entren con un efecto de escala
+// Entren con un efecto de escala
 gsap.from(".servicio-card", { // Cambia ".servicio-card" por la clase de tus cuadros de servicios
     scrollTrigger: {
-        trigger: ".servicio-card",
+        trigger: "services-boxes",
         start: "top 85%",
     },
     scale: 0.8,
     opacity: 0,
     duration: 1,
-    stagger: 0.2, // Crea ese efecto de "cascada" muy elegante
+    stagger: 0.2, // Crea ese fx de "cascada" muy elegante
     ease: "back.out(1.7)"
 });
 
-// 3. El Botón de Temario que creamos
-// Queremos que llame la atención haciendo un pequeño "pop" cuando lleguen a él
-gsap.from(".btn-download", {
+// 3. El Botón de Temario
+// Ppequeño "pop" cuando lleguen a él
+gsap.from("btn icon-btn", {
     scrollTrigger: {
-        trigger: ".btn-download",
+        trigger: "btn icon-btn",
         start: "top 90%",
     },
     x: -100,
     opacity: 0,
     duration: 1.5,
     ease: "elastic.out(1, 0.5)"
+});
+
+// Animación de sacudida (Shake) infinita
+gsap.to("btn icon-btn", {
+  duration: 0.1,        // Duración de cada movimiento individual
+  x: 5,                 // Se mueve 5 píxeles a la derecha
+  repeat: 5,            // Se repite 5 veces (el "temblor")
+  yoyo: true,           // Va y vuelve para crear el efecto vibración
+  ease: "power1.inOut",
+  repeatDelay: 2,       // <--- AQUÍ está la clave: espera 2 segundos antes de volver a empezar
+  delay: 1              // Espera un segundo al cargar la página por primera vez
 });
