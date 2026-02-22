@@ -39,9 +39,9 @@ gsap.from("h2, h1", {
 
 // 2. Efecto para las "Tarjetas" o "Servicios"
 // Entren con un efecto de escala
-gsap.from(".servicio-card", { // Cambia ".servicio-card" por la clase de tus cuadros de servicios
+gsap.from(".service-box", { // Cambia ".servicio-card" por la clase de tus cuadros de servicios
     scrollTrigger: {
-        trigger: "services-boxes",
+        trigger: ".services-boxes",
         start: "top 85%",
     },
     scale: 0.8,
@@ -53,9 +53,9 @@ gsap.from(".servicio-card", { // Cambia ".servicio-card" por la clase de tus cua
 
 // 3. El Botón de Temario
 // Ppequeño "pop" cuando lleguen a él
-gsap.from("btn icon-btn", {
+gsap.from(".btn.icon-btn", {
     scrollTrigger: {
-        trigger: "btn icon-btn",
+        trigger: ".btn.icon-btn",
         start: "top 90%",
     },
     x: -100,
@@ -65,7 +65,7 @@ gsap.from("btn icon-btn", {
 });
 
 // Animación de sacudida (Shake) infinita
-gsap.to("btn icon-btn", {
+gsap.to(".btn.icon-btn", {
   duration: 0.1,        // Duración de cada movimiento individual
   x: 5,                 // Se mueve 5 píxeles a la derecha
   repeat: 5,            // Se repite 5 veces (el "temblor")
