@@ -69,17 +69,17 @@
     // BOTON TEMARIO (SOLO ESTE)
     /////////////////////////
     
-    const ctaBtn = document.querySelector("#cursos .icon-btn");
+    const ctaBtn = document.querySelector("#cursos .btn.icon-btn");
     
     gsap.from(ctaBtn, {
       scrollTrigger: {
         trigger: ctaBtn,
         start: "top 85%",
       },
-      x: -100,
+      x: 5,
       opacity: 0,
-      duration: 1.5,
-      ease: "elastic.out(1, 0.5)"
+      duration: 0.2,
+      ease: "elastic.out(1, 0.6)"
     });
     
     /////////////////////////
@@ -91,11 +91,17 @@
         trigger: ctaBtn,
         start: "top 80%",
       },
-      rotation: 2,
-      duration: 0.08,
-      repeat: 6,
-      yoyo: true,
-      repeatDelay: 4
+      keyframes: [
+        { x: -18, duration: 0.04 },
+        { x: 18, duration: 0.04 },
+        { x: -14, duration: 0.04 },
+        { x: 14, duration: 0.04 },
+        { x: -10, duration: 0.04 },
+        { x: 10, duration: 0.04 },
+        { x: 0, duration: 0.04 }
+      ],
+      repeat: -1,
+      repeatDelay: 1.5
     });
     
     });
