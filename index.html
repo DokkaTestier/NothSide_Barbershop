@@ -249,27 +249,70 @@
     lucide.createIcons();
   });
 
-  // Lightbox
+ // ==========================
+// LIGHTBOX PRO + SWIPE MOBILE
+// ==========================
+
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const closeLightbox = document.getElementById('close-lightbox');
 const carouselImages = document.querySelectorAll('.carousel-card img');
 
-carouselImages.forEach(img => {
+let currentIndex = 0;
+let startX = 0;
+
+// Abrir imagen
+carouselImages.forEach((img, index) => {
   img.addEventListener('click', () => {
-    lightboxImg.src = img.src;
+    currentIndex = index;
+    showImage();
     lightbox.classList.add('show');
+    document.body.style.overflow = "hidden"; // bloquea fondo
   });
 });
 
-closeLightbox.addEventListener('click', () => {
-  lightbox.classList.remove('show');
-});
+// Mostrar imagen según índice
+function showImage() {
+  lightboxImg.src = carouselImages[currentIndex].src;
+}
+
+// Cerrar
+closeLightbox.addEventListener('click', closeLB);
 
 lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) {
-    lightbox.classList.remove('show');
+  if (e.target === lightbox) closeLB();
+});
+
+function closeLB() {
+  lightbox.classList.remove('show');
+  document.body.style.overflow = "auto";
+}
+
+//
+// ==========================
+// SWIPE TOUCH MOBILE
+// ==========================
+//
+
+lightbox.addEventListener("touchstart", (e) => {
+  startX = e.touches[0].clientX;
+});
+
+lightbox.addEventListener("touchend", (e) => {
+  let endX = e.changedTouches[0].clientX;
+  let diff = startX - endX;
+
+  if (Math.abs(diff) < 50) return; // evita toques pequeños
+
+  if (diff > 0) {
+    // swipe izquierda → siguiente
+    currentIndex = (currentIndex + 1) % carouselImages.length;
+  } else {
+    // swipe derecha → anterior
+    currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
   }
+
+  showImage();
 });
 
 </script>
