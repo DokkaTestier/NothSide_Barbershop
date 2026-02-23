@@ -3,325 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- 🔧 SEO -->
-  <meta name="description" content="NSB Web - Somos expertos en cortes de cabello, arreglo de barba, decoloración, trenzas y tratamientos capilares en Heroes de Tecamac. ¡Reserva tu cita online!">
-  <meta name="keywords" content="corte de cabello, estética visual, perfilado de barba, diseño de cejas, afeitado con toalla caliente, decoloración para cabello, trenzas con diseño, box braids hombre, tratamiento capilar para hombre, hidratación para cabello, curso de barbería Tecamac, aprender a ser barbero, barbershop near me, Barberia cerca de mi, NorthSide Barbershop, NSB México">
-  <meta name="author" content="NSB Web - North Side Barbershop">
-  <meta name="robots" content="index, follow">
-  <meta name="geo.region" content="MX">
-  <meta name="geo.placename" content="México">
-  <meta name="geo.position" content="19.6208;-99.0256">
-  <meta name="ICBM" content="19.6208, -99.0256">
   <title>NSB | Barbershop & Studio</title>
+  
+  <meta name="description" content="NSB Web - Expertos en cortes, barba y formación profesional en Tecamac.">
   <link rel="icon" href="img/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="img/favicon-180.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
 
-<header class="header">
-  <div class="container-header"> 
-    <img src="img/NorthSideRacing_variant.png" alt="NSR Logo" class="logo">
-  
-  <button class="hamburger" id="hamburger-btn">
-    <i data-lucide="menu"></i>
-  </button>
-  
-  <nav id="nav-links">
-    <a href="#inicio">• Inicio</a>
-    <a href="#servicios">• Servicios</a>
-    <a href="#cursos">• Cursos</a>
-    <a href="#nosotros">• Nosotros</a>
-    <a href="#contacto">• Contacto</a>
-    <a href="#faq">• FAQ</a>
-  </nav>
-  </div>
-
-</header>
-
-<main>
-  <section id="inicio" class="section hero fade-in">
-  <div class="hero-overlay">
-    <h1 class="hero-title">
-      <span style="color: #004fff;">FIVE</span>
-      <span style="color: #EBE8DF;">YEARS IN<br />THE GAME</span>
-    </h1>
-    <p class="hero-subtitle">
-      <span style="color: #ebe8df98;">NUESTRO DIFERENCIADOR<br/></span>
-      <span style="color: #EBE8DF;">NUESTRO EQUIPO DE <br />ESPECIALISTAS DEDICADOS.</span>
-    </p><br/>
-    <a href="#contacto" class="btn">Contáctanos</a>
-  </div>
-</section>
-
-
-  <section id="servicios" class="section fade-in">
-    <h2>Servicios</h2>
-
-    <div class="services-boxes">
-      <div class="service-box">
-        <h3>Cortes</h3>
-        <p>Corte clásico o moderno realizado con máquina o tijera. Degradado perfecto, texturizado o desfilado.</p>
-      </div>
-      <div class="service-box">
-        <h3>Barba y Ceja</h3>
-        <p>Mejoramos tu imagen con diseño, perfilado y afeitado con toalla caliente.</p>
-      </div>
-      <div class="service-box">
-        <h3>Curso de Barberia</h3>
-        <p>Aprende desde cero: cortes, degradados, barba, ceja, color y tendencias. Clases prácticas.</p>
-      </div>
+  <header class="header">
+    <div class="container-header"> 
+      <img src="img/NorthSideRacing_variant.png" alt="NSR Logo" class="logo">
+      <button class="hamburger" id="hamburger-btn">
+        <i data-lucide="menu"></i>
+      </button>
+      <nav id="nav-links">
+        <a href="#inicio">• Inicio</a>
+        <a href="#servicios">• Servicios</a>
+        <a href="#cursos">• Cursos</a>
+        <a href="#nosotros">• Nosotros</a>
+        <a href="#contacto">• Contacto</a>
+        <a href="#faq">• FAQ</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="services-boxes hidden" id="extra-services">
-      <div class="service-box">
-        <h3>Tratamiento</h3>
-        <p>Hidratación capilar profunda, reconstrucción o limpieza facial, exfoliación y mascarillas para hombres.</p>
+  <main>
+    <section id="inicio" class="hero">
+      <div class="hero-overlay">
+        <h1 class="hero-title">
+          <span style="color: #004fff;">FIVE</span>
+          <span style="color: #EBE8DF;">YEARS IN<br />THE GAME</span>
+        </h1>
+        <p class="hero-subtitle">
+          <span style="color: rgba(235, 232, 223, 0.6);">NUESTRO DIFERENCIADOR<br/></span>
+          NUESTRO EQUIPO DE ESPECIALISTAS DEDICADOS.
+        </p>
+        <a href="#contacto" class="btn">Contáctanos</a>
       </div>
-      <div class="service-box">
-        <h3>Decoloracion & Tintes</h3>
-        <p>Aplicación de colores vibrantes (como Arctic Fox, Pravana).</p>
+    </section>
+
+    <section id="servicios" class="section">
+      <h2>Servicios</h2>
+      <div class="services-boxes">
+        <div class="service-box">
+          <h3>Cortes</h3>
+          <p>Corte clásico o moderno realizado con máquina o tijera. Degradado perfecto, texturizado o desfilado.</p>
+        </div>
+        <div class="service-box">
+          <h3>Barba y Ceja</h3>
+          <p>Mejoramos tu imagen con diseño, perfilado y afeitado con toalla caliente.</p>
+        </div>
+        <div class="service-box">
+          <h3>Curso de Barbería</h3>
+          <p>Aprende desde cero: cortes, degradados, barba, ceja, color y tendencias. Clases prácticas.</p>
+        </div>
       </div>
-      <div class="service-box">
-        <h3>Trenzas</h3>
-        <p>Trenzas basicas o con diseño, colores o estilos personalizados. (Costo extra del material).</p>
+
+      <div class="services-boxes" id="extra-services" style="display: none; margin-top: 25px;">
+        <div class="service-box">
+          <h3>Tratamiento</h3>
+          <p>Hidratación capilar profunda, reconstrucción o limpieza facial, exfoliación y mascarillas.</p>
+        </div>
+        <div class="service-box">
+          <h3>Decoloración & Tintes</h3>
+          <p>Aplicación de colores vibrantes (como Arctic Fox, Pravana).</p>
+        </div>
+        <div class="service-box">
+          <h3>Trenzas</h3>
+          <p>Trenzas básicas o con diseño, colores o estilos personalizados.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="expand-trigger" id="toggle-arrow">
-      <i data-lucide="chevron-down"></i>
-    </div>
+      <div class="expand-trigger" id="toggle-arrow">
+        <i data-lucide="chevron-down"></i>
+      </div>
+      <p style="margin-top:20px; font-size: 0.9rem; color: gray;">Nuestros servicios pueden variar según horarios y disponibilidad.</p>
+    </section>
 
-    <p class="hero-subtittle">
-      Nuestros servicios pueden variar segun horarios y disponibilidad.
-    </p>
-  </section>
+    <section id="cursos" class="section">
+      <h2>💈 Curso de Barbería 💈</h2>
+      <div class="curso-content" style="max-width: 800px; margin: 0 auto; text-align: left;">
+        <p>🔥 <strong>Conviértete en un barbero completo.</strong></p><br>
+        <p>✅ <strong>Técnica profesional:</strong> Dominarás cortes, desvanecidos, diseño de barba, colorimetría y tratamientos.</p><br>
+        <p>✅ <strong>Visión de negocio:</strong> Te enseñamos a fotografiar tu trabajo, editarlo y gestionar redes sociales para atraer clientes.</p><br>
+        <p>✂️ Te enseñamos a cortar. Te formamos para triunfar.</p><br>
+        <a href="assets/curso-barberia.pdf" download class="btn icon-btn">
+          <i data-lucide="book-open"></i> Descargar Temario
+        </a>
+      </div>
+    </section>
 
-  <section id="cursos" class="section fade-in">
-  <h2>💈 Curso de Barberia 💈</h2>  
-      <p class="hero-subtittle">
-      🔥 Conviértete en un barbero completo. <br><br>
+    <section id="trabajos" class="section">
+      <h2>Nuestro Trabajo</h2>
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <div class="carousel-item"><img src="img/trabajo1.jpg" alt="1"></div>
+          <div class="carousel-item"><img src="img/trabajo2.jpg" alt="2"></div>
+          <div class="carousel-item"><img src="img/trabajo3.jpg" alt="3"></div>
+          <div class="carousel-item"><img src="img/trabajo4.jpg" alt="4"></div>
+          <div class="carousel-item"><img src="img/trabajo5.jpg" alt="5"></div>
+          <div class="carousel-item"><img src="img/trabajo6.jpg" alt="6"></div>
+          <div class="carousel-item"><img src="img/trabajo7.jpg" alt="7"></div>
+        </div>
+      </div>
+    </section>
 
-      📘 En nuestro curso no solo aprenderás técnicas de corte, barba, color y trenzas. Te formamos para que destaques en todo:<br><br>
+    <section id="nosotros" class="section">
+      <h2>Sobre Nosotros</h2>
+      <p style="max-width: 800px; margin: 0 auto;">
+        Nuestra visión es redefinir el arte de la barbería en México. Somos un equipo sólido en técnicas y diseño. No solo buscamos perfeccionar cada corte, sino crear una experiencia donde la pasión por el oficio se encuentra con herramientas innovadoras.
+      </p>
+    </section>
 
-      ✅ Técnica profesional: Dominarás cortes con máquina y tijera, desvanecidos, diseño de barba y cejas, decoloración, tintes de fantasía, tratamientos capilares y faciales.<br><br>
+    <section id="contacto" class="section">
+      <h2>Contacto</h2>
+      <div class="contact-buttons">
+        <a href="https://www.instagram.com/northhsidemx_bs" target="_blank" class="btn icon-btn"><i data-lucide="instagram"></i> Instagram</a>
+        <a href="https://wa.me/525610505011" target="_blank" class="btn icon-btn"><i data-lucide="message-circle"></i> WhatsApp</a>
+        <a href="#" class="btn icon-btn"><i data-lucide="map-pin"></i> Ubicación</a>
+      </div>
+    </section>
 
-      ✅ Visión de negocio: Te enseñamos a fotografiar y editar tus trabajos como un profesional, a usar las redes sociales para atraer clientes y a dar un trato al cliente que te haga recomendado siempre.<br><br>
+    <section id="faq" class="section">
+      <h2>FAQ</h2>
+      <p>Descargar nuestros <a href="assets/terminos-condiciones.pdf" target="_blank" style="color: #004fff;">Términos y Condiciones NSB</a>.</p>
+    </section>
+  </main>
 
-      Buscamos formar barberos críticos, creativos y resolutivos, con criterio propio y habilidades reales para emprender.<br><br>
+  <footer class="footer">
+    <p>© 2026 NSB Web. Todos los derechos reservados.</p>
+  </footer>
 
-      ✂️ Te enseñamos a cortar. Te formamos para triunfar.<br><br>
+  <button id="scrollTopBtn" class="scroll-top-btn"><i data-lucide="arrow-up"></i></button>
 
-      📲 Reserva tu lugar por WhatsApp!<br><br>
-
-      <a href="assets/curso-barberia.pdf" download="curso-barberia.pdf" class="btn icon-btn">
-        <i data-lucide="book-open"></i>Descargar Temario
-      </a>
-    </p>
-
-  <section id="trabajos" class="section fade-in">
-  <h2>Trabajos</h2>
-
-  <div class="carousel-container">
-    <div class="carousel-track">
-      <div class="carousel-card"><img src="img/trabajo1.jpg" alt="Trabajo 1"></div>
-      <div class="carousel-card"><img src="img/trabajo2.jpg" alt="Trabajo 2"></div>
-      <div class="carousel-card"><img src="img/trabajo3.jpg" alt="Trabajo 3"></div>
-      <div class="carousel-card"><img src="img/trabajo4.jpg" alt="Trabajo 4"></div>
-      <div class="carousel-card"><img src="img/trabajo5.jpg" alt="Trabajo 5"></div>
-      <div class="carousel-card"><img src="img/trabajo6.jpg" alt="Trabajo 6"></div>
-      <div class="carousel-card"><img src="img/trabajo7.jpg" alt="Trabajo 7"></div>
-    </div>
-  </div>
-</section>
-
-  <section id="nosotros" class="section fade-in">
-    <h2>Sobre Nosotros</h2>
-    <p class="hero-subtitle">
-      Nuestra visión es redefinir el arte de la barbería en México.<br><br> Somos un equipo muy solido en tecnicas, diseño y tecnologías de vanguardia.<br> Nos enfocamos en crear soluciones visuales impactantes y funcionales que le daran personalidad a tu imagen. <br> <br> No solo buscamos perfeccionar cada corte, cada línea y cada detalle, sino crear una experiencia donde la pasión por el oficio se encuentra con tecnicas de vanguardia.<br> Queremos ser el punto de referencia donde la tradición del barbero se potencia con herramientas innovadoras y tratamientos de última generación.
-    </p>
-  </section>
-
-  <section id="contacto" class="section fade-in">
-    <h2>Contacto</h2>
-    <p>
-      Contáctanos a través de nuestras redes sociales, envíanos un mensaje o conoce nuestra barberia.
-    </p>
-
-    <div class="contact-buttons">
-      <a href="https://www.instagram.com/northhsidemx_bs" target="_blank" class="btn icon-btn">
-        <i data-lucide="instagram"></i> Instagram
-      </a>
-      <a href="https://wa.me/525610505011" target="_blank" class="btn icon-btn">
-        <i data-lucide="message-circle"></i> WhatsApp
-      </a>
-      <a href="https://maps.app.goo.gl/MKRsLYeQJ19ZUbo57" target="_blank" class="btn icon-btn">
-        <i data-lucide="map-pin"></i> Ubicación
-      </a>
-    </div>
-  </section>
-
-  <section id="faq" class="section fade-in">
-    <h2>FAQ</h2>
-    <p>
-      Descargar nuestros
-      <a href="assets/terminos-condiciones.pdf" target="_blank" style="color: #004fff; text-decoration: underline;">
-        Términos y Condiciones NSB
-      </a>.
-    </p>
-  </section>
-</main>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-content">
-    <img id="lightbox-img" src="" alt="Imagen ampliada">
-    <button id="close-lightbox" class="btn close-btn">
-      <i data-lucide="x"></i>
-    </button>
-  </div>
-</div>
-
-<footer class="footer">
-  <p>&copy; 2026 NSB Web. Todos los derechos reservados.</p>
-</footer>
-
-<button id="scrollTopBtn" class="scroll-top-btn">
-  <i data-lucide="arrow-up"></i>
-</button>
-
-<script>
-  const elements = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  });
-  elements.forEach(el => observer.observe(el));
-
-  lucide.createIcons();
-
-  const hamburger = document.getElementById('hamburger-btn');
-  const navLinks = document.getElementById('nav-links');
-  const icon = hamburger.querySelector('i');
-  const links = navLinks.querySelectorAll('a');
-
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('nav-active');
-    const isActive = navLinks.classList.contains('nav-active');
-    icon.setAttribute('data-lucide', isActive ? 'x' : 'menu');
-    lucide.createIcons();
-  });
-
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('nav-active');
-      icon.setAttribute('data-lucide', 'menu');
-      lucide.createIcons();
-    });
-  });
-
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-    document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 100);
-  });
-
-  scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  const trigger = document.getElementById('toggle-arrow');
-  const extraServices = document.getElementById('extra-services');
-  let expanded = false;
-
-  trigger.addEventListener('click', () => {
-    expanded = !expanded;
-    trigger.innerHTML = `<i data-lucide="${expanded ? 'chevron-up' : 'chevron-down'}"></i>`;
-    extraServices.classList.toggle('show', expanded);
-    const serviciosSection = document.getElementById('servicios');
-    serviciosSection.insertBefore(trigger, serviciosSection.querySelector('.hero-subtittle'));
-    lucide.createIcons();
-  });
-
- // ==========================
-// LIGHTBOX PRO + SWIPE MOBILE
-// ==========================
-
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const closeLightbox = document.getElementById('close-lightbox');
-const carouselImages = document.querySelectorAll('.carousel-card img');
-
-let currentIndex = 0;
-let startX = 0;
-
-// Abrir imagen
-carouselImages.forEach((img, index) => {
-  img.addEventListener('click', () => {
-    currentIndex = index;
-    showImage();
-    lightbox.classList.add('show');
-    document.body.style.overflow = "hidden"; // bloquea fondo
-  });
-});
-
-// Mostrar imagen según índice
-function showImage() {
-  lightboxImg.src = carouselImages[currentIndex].src;
-}
-
-// Cerrar
-closeLightbox.addEventListener('click', closeLB);
-
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) closeLB();
-});
-
-function closeLB() {
-  lightbox.classList.remove('show');
-  document.body.style.overflow = "auto";
-}
-
-//
-// ==========================
-// SWIPE TOUCH MOBILE
-// ==========================
-//
-
-lightbox.addEventListener("touchstart", (e) => {
-  startX = e.touches[0].clientX;
-});
-
-lightbox.addEventListener("touchend", (e) => {
-  let endX = e.changedTouches[0].clientX;
-  let diff = startX - endX;
-
-  if (Math.abs(diff) < 50) return; // evita toques pequeños
-
-  if (diff > 0) {
-    // swipe izquierda → siguiente
-    currentIndex = (currentIndex + 1) % carouselImages.length;
-  } else {
-    // swipe derecha → anterior
-    currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
-  }
-
-  showImage();
-});
-
-</script>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
