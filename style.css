@@ -11,6 +11,9 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
+  background-color: #111111;
+  /* Evita el rebote elástico que muestra las franjas blancas en iOS/Android */
+  overscroll-behavior-y: none;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -260,3 +263,4 @@ body::before {
   font-weight: bold;
   cursor: pointer;
 }
+
