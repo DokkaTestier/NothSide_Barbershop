@@ -164,6 +164,9 @@ body {
 }
 
 html, body {
+  overflow-x: hidden;
+  width: 100%;
+   position: relative;
   /* Forzamos que el fondo ocupe siempre el 100% del alto visible */
   height: 100%;
   margin: 0;
