@@ -1,5 +1,5 @@
 :root {
-  --primary: #004fff;
+  --primary: #0051ff;
   --bg: #151515;
   --text: #EBE8DF;
   --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -60,15 +60,19 @@ body {
 }
 
 .service-box {
-  background: #1c1c1c; padding: 35px; border-radius: 12px;
-  border: 1px solid #333; transition: var(--transition);
-  cursor: pointer;
-  user-select: none; /* Evita seleccionar texto al hacer clic rápido */
+  background: rgba(28, 28, 28, 0.4); /* Fondo semi-transparente */
+  backdrop-filter: blur(8px);       /* Efecto de desenfoque detrás de la caja */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Borde casi invisible */
+  padding: 35px;
+  border-radius: 12px;
+  transition: var(--transition);
 }
 
 .service-box:hover {
-  border-color: var(--primary); transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 79, 255, 0.2);
+  background: rgba(28, 28, 28, 0.8);
+  border-color: var(--primary);
+  /* Sombra más suave y extendida */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 79, 255, 0.1);
 }
 
 /* Efecto Click (Desktop y Mobile) - Iluminación en Blanco */
@@ -87,10 +91,51 @@ body {
 
 .expand-trigger { cursor: pointer; font-size: 2rem; color: var(--primary); margin-top: 30px; }
 
-.carousel-container { width: 100%; overflow: hidden; cursor: grab; padding: 20px 0; }
-.carousel-track { display: flex; gap: 15px; will-change: transform; }
-.carousel-item { flex: 0 0 280px; height: 380px; border-radius: 10px; overflow: hidden; }
-.carousel-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* Contenedor del Carrusel */
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  position: relative;
+}
+
+/* El track ahora será manejado puramente por GSAP */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content; /* Importante para que no se colapse */
+  will-change: transform;
+}
+
+.carousel-item {
+  flex: 0 0 280px; /* Mantenemos el ancho fijo que elegiste */
+  height: 380px;   /* Mantenemos el alto */
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Evita que el contenedor se deforme */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000; /* Fondo negro por si la imagen es más delgada */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center;
+  display: block;
+  pointer-events: auto; 
+  cursor: zoom-in;
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    flex: 0 0 220px; /* Reducimos el ancho en mobile para que se vean más fotos */
+    height: 300px;   /* Reducimos el alto proporcionalmente */
+  }
+}
 
 .btn {
   padding: 14px 30px; background: var(--primary); color: white;
@@ -115,4 +160,103 @@ body {
   position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px;
   border-radius: 50%; background: var(--primary); color: white;
   border: none; display: none; z-index: 100; cursor: pointer;
+}
+
+body {
+  /* Fondo con profundidad: un gris casi negro que se aclara ligeramente al centro */
+  background: radial-gradient(circle at 50% 50%, #222222 0%, #000000 100%);
+  background-attachment: fixed; /* Mantiene el fondo estático mientras el contenido fluye */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Crea líneas horizontales y verticales sutiles */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  /* Tamaño de los cuadros del grid (puedes ajustarlo a tu gusto) */
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1; /* Lo enviamos al fondo */
+}
+
+/* --- Ajustes de Contacto --- */
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;     /* Permite que los botones bajen si no caben */
+  justify-content: center;
+  gap: 15px;           /* Crea la separación que faltaba */
+  margin-top: 20px;
+}
+
+/* --- Ajustes del Contenido del Curso --- */
+.curso-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left; /* Mantiene el texto alineado a la izquierda */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea el contenido inicial a la izquierda */
+}
+
+/* --- Centrar específicamente el Botón del Temario --- */
+.curso-content .btn {
+  margin: 30px auto 0 auto; /* El 'auto' a los lados lo centra horizontalmente */
+  display: inline-flex;
+}
+
+/* --- Ajuste extra para Mobile (Media Query) --- */
+@media (max-width: 768px) {
+  .contact-buttons {
+    flex-direction: column; /* Los pone uno sobre otro en celulares */
+    align-items: center;
+  }
+  
+  .contact-buttons .btn {
+    width: 100%;           /* Hace que los botones ocupen el ancho disponible */
+    max-width: 300px;      /* Pero con un límite para que no se vean gigantes */
+    justify-content: center;
+  }
+}
+
+/* --- Estilos de la Lightbox --- */
+.lightbox {
+  display: none; /* Oculta por defecto */
+  position: fixed;
+  z-index: 2000; /* Por encima de todo */
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.95); /* Fondo casi negro */
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.lightbox.active .lightbox-content {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
 }

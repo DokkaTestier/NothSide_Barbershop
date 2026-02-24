@@ -65,30 +65,36 @@
       });
     }
 
+
     const track = document.querySelector(".carousel-track");
-    const slides = document.querySelectorAll(".carousel-item");
+    const slides = Array.from(document.querySelectorAll(".carousel-item"));
+
     if (track && slides.length > 0) {
-      let position = 0, velocity = 0, isDragging = false, lastX = 0;
-      slides.forEach(slide => track.appendChild(slide.cloneNode(true)));
-      function update() {
-        position += velocity; velocity *= 0.95;
-        const totalW = slides[0].offsetWidth * slides.length;
-        if (position <= -totalW) position += totalW;
-        if (position > 0) position -= totalW;
-        track.style.transform = `translateX(${position}px)`;
-        requestAnimationFrame(update);
-      }
-      update();
-      const start = (x) => { isDragging = true; lastX = x; velocity = 0; track.style.cursor = 'grabbing'; };
-      const move = (x) => { if (!isDragging) return; let delta = x - lastX; position += delta; velocity = delta; lastX = x; };
-      const end = () => { isDragging = false; track.style.cursor = 'grab'; };
-      track.addEventListener('mousedown', e => start(e.clientX));
-      window.addEventListener('mousemove', e => move(e.clientX));
-      window.addEventListener('mouseup', end);
-      track.addEventListener('touchstart', e => start(e.touches[0].clientX), {passive:true});
-      track.addEventListener('touchmove', e => move(e.touches[0].clientX), {passive:true});
-      track.addEventListener('touchend', end);
+      // 1. Clonamos los elementos para crear el efecto infinito
+      slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        track.appendChild(clone);
+      });
+
+      // 2. Calculamos el ancho total de una vuelta
+      const totalWidth = (slides[0].offsetWidth + 20) * slides.length; // 20 es el gap
+
+      // 3. Creamos la animación infinita
+      const animation = gsap.to(track, {
+        x: -totalWidth,
+        duration: 25, // Ajusta la velocidad (más segundos = más lento)
+        ease: "none",
+        repeat: -1,
+        paused: false
+      });
+
+      // 4. Interaction: Se detiene un poco al pasar el mouse (opcional, estilo Apple)
+      track.addEventListener("mouseenter", () => gsap.to(animation, {timeScale: 0.2, duration: 0.5}));
+      track.addEventListener("mouseleave", () => gsap.to(animation, {timeScale: 1, duration: 0.5}));
+  
+      // Para móviles, que no se detenga al tocar para no romper la fluidez
     }
+
 
     const scrollBtn = document.getElementById('scrollTopBtn');
     window.addEventListener('scroll', () => {
@@ -96,6 +102,35 @@
       document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
     });
     scrollBtn.addEventListener('click', () => lenis.scrollTo(0));
+
+    // --- Lógica de la Lightbox (Corregida para Clones) ---
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+if (lightbox && lightboxImg) {
+  // Escuchamos el clic en cualquier parte del documento
+  document.addEventListener('click', (e) => {
+    // Verificamos si lo que clickeamos es una imagen dentro de un carousel-item
+    if (e.target.matches('.carousel-item img')) {
+      lightbox.style.display = 'flex';
+      
+      // Forzamos un pequeño delay para que la transición de opacidad funcione
+      setTimeout(() => lightbox.classList.add('active'), 10);
+      
+      lightboxImg.src = e.target.src;
+      document.body.style.overflow = 'hidden'; // Bloquea scroll
+    }
+  });
+
+  // Cerrar la Lightbox
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    setTimeout(() => {
+      lightbox.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Devuelve scroll
+    }, 300);
+  });
+}
 
   });
 })();
