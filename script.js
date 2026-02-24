@@ -1,15 +1,12 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
     
-    // Iconos
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    // Smooth Scroll (Lenis)
     const lenis = new Lenis();
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // Menú Móvil
     const hamburger = document.getElementById('hamburger-btn');
     const navLinks = document.getElementById('nav-links');
     const icon = hamburger?.querySelector('i');
@@ -32,41 +29,30 @@
       });
     }
 
-    // Animaciones GSAP
     gsap.registerPlugin(ScrollTrigger);
 
-    // Fade in para las cajas de servicio de forma segura
-    gsap.from(".service-box", {
-      scrollTrigger: {
-        trigger: ".services-grid",
-        start: "top 85%",
-      },
-      y: 40,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 1,
-      ease: "power2.out"
+    gsap.to(".hero", {
+      scrollTrigger: { trigger: ".hero", start: "top top", scrub: true },
+      y: 100, scale: 1.1
     });
 
-    // Acordeón de Servicios
+    ScrollTrigger.batch(".section h2, .service-box, .curso-content", {
+      onEnter: batch => gsap.from(batch, {
+        y: 30, opacity: 0, stagger: 0.15, duration: 0.8, ease: "power2.out"
+      })
+    });
+
     const trigger = document.getElementById('toggle-arrow');
     const extra = document.getElementById('extra-services');
     if (trigger && extra) {
       trigger.addEventListener('click', () => {
-        extra.classList.toggle('show');
-        const isVisible = extra.classList.contains('show');
-        trigger.innerHTML = `<i data-lucide="${isVisible ? 'chevron-up' : 'chevron-down'}"></i>`;
+        const isHidden = extra.style.display === 'none';
+        extra.style.display = isHidden ? 'grid' : 'none';
+        trigger.innerHTML = `<i data-lucide="${isHidden ? 'chevron-up' : 'chevron-down'}"></i>`;
         lucide.createIcons();
-        
-        if(isVisible) {
-          gsap.from(extra.querySelectorAll('.service-box'), {
-            y: 20, opacity: 0, stagger: 0.1, duration: 0.5
-          });
-        }
       });
     }
 
-    // Carrusel
     const track = document.querySelector(".carousel-track");
     const slides = document.querySelectorAll(".carousel-item");
     if (track && slides.length > 0) {
@@ -92,7 +78,6 @@
       track.addEventListener('touchend', end);
     }
 
-    // Scroll Top
     const scrollBtn = document.getElementById('scrollTopBtn');
     window.addEventListener('scroll', () => {
       scrollBtn.style.display = window.scrollY > 600 ? 'block' : 'none';
