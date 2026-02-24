@@ -11,8 +11,6 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
-  background-color: #111111;
-  /* Evita el rebote elástico que muestra las franjas blancas en iOS/Android */
   overscroll-behavior-y: none;
   line-height: 1.6;
   overflow-x: hidden;
@@ -165,29 +163,29 @@ body {
   border: none; display: none; z-index: 100; cursor: pointer;
 }
 
+html, body {
+  /* Forzamos que el fondo ocupe siempre el 100% del alto visible */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #111111; /* Color de respaldo sólido */
+}
+
 body {
-  /* Fondo con profundidad: un gris casi negro que se aclara ligeramente al centro */
-  background: radial-gradient(circle at 50% 50%, #222222 0%, #000000 100%);
-  background-attachment: fixed; /* Mantiene el fondo estático mientras el contenido fluye */
+  min-height: 100vh;
+  /* Evita el scroll horizontal que genera la franja derecha */
+  overflow-x: hidden; 
+  position: relative;
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  /* Usamos inset para asegurar cobertura total */
-  top: -10%; 
-  left: -10%;
-  width: 120%; 
-  height: 120%;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
+  /* ... tus estilos anteriores ... */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed; /* Asegura que el grid no se mueva al hacer scroll */
   z-index: -1;
-  /* Asegúrate de que el fondo del grid no tenga degradados a blanco */
-  mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
 }
 
 /* --- Ajustes de Contacto --- */
@@ -258,12 +256,13 @@ body::before {
 
 .lightbox-close {
   position: absolute;
-  top: 30px;
-  right: 40px;
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
+  top: 20px;
+  right: 25px;
+  color: #ffffff !important; /* Blanco puro */
+  font-size: 50px; /* Más grande para dedos */
+  z-index: 2001;
   cursor: pointer;
+  line-height: 1;
 }
 
 /* --- Estadísticas Alineadas Horizontalmente --- */
