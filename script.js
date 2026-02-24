@@ -126,31 +126,40 @@
       });
     }
 
-    // --- Lógica de Contadores (FUERA del IF de la lightbox) ---
-    const stats = document.querySelectorAll(".stat-number");
 
-    stats.forEach((stat) => {
-      const target = +stat.getAttribute("data-target");
-      const isPlus = stat.innerText.includes("+");
+    // --- Lógica de Contadores Animados Corregida ---
+const stats = document.querySelectorAll(".stat-number");
 
-      ScrollTrigger.create({
-        trigger: stat,
-        start: "top 90%", 
-        onEnter: () => {
-          gsap.to(stat, {
-            innerText: target,
-            duration: 2.5,
-            snap: { innerText: 1 },
-            ease: "power2.out",
-            onUpdate: function() {
-              // Actualiza el texto manteniendo el signo +
-              stat.innerHTML = (isPlus ? "+" : "") + Math.floor(stat.innerText);
-            }
-          });
+stats.forEach((stat) => {
+  // Obtenemos el valor final del atributo data-target
+  const targetValue = +stat.getAttribute("data-target");
+  // Detectamos si el texto original tiene un "+"
+  const hasPlus = stat.textContent.includes("+");
+
+  ScrollTrigger.create({
+    trigger: stat,
+    start: "top 90%", 
+    onEnter: () => {
+      // Creamos un objeto temporal para que GSAP anime el número limpiamente
+      let countObj = { val: 0 };
+      
+      gsap.to(countObj, {
+        val: targetValue,
+        duration: 2.5,
+        ease: "power2.out",
+        onUpdate: function() {
+          // Renderizamos el número redondeado y añadimos el "+" si es necesario
+          stat.innerText = (hasPlus ? "+" : "") + Math.floor(countObj.val);
         },
-        once: true
+        onComplete: function() {
+          // Al terminar, aseguramos el valor exacto final
+          stat.innerText = (hasPlus ? "+" : "") + targetValue;
+        }
       });
-    });
+    },
+    once: true 
+  });
+});
 
   }); // Cierre de DOMContentLoaded
 })(); // Cierre de la función anónima

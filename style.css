@@ -266,3 +266,76 @@ body::before {
   cursor: pointer;
 }
 
+/* --- Estadísticas Alineadas Horizontalmente --- */
+.stats-container {
+  display: grid;
+  /* Forzamos 3 columnas iguales en desktop */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  margin-top: 50px;
+  max-width: 1000px; /* Centra el bloque para que no se estire demasiado */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-item {
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-number {
+  font-size: clamp(2.5rem, 4vw, 4rem) !important; /* Ajuste de tamaño para que quepan bien */
+  color: var(--primary) !important;
+  margin-bottom: 5px;
+  font-weight: 800;
+  opacity: 1 !important; /* Mantenemos tu regla de 100% opacidad */
+}
+
+/* --- Ajuste para Mobile --- */
+@media (max-width: 768px) {
+  .stats-container {
+    /* En celulares volvemos a una sola columna para que no se amontonen */
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Contenedor reducido para integrarse en texto */
+.mini-stats {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0; /* Espacio entre los párrafos del curso */
+  width: 100%;
+}
+
+.mini-stats .stat-item {
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.02); /* Más sutil */
+  border-radius: 8px;
+}
+
+.mini-stats .stat-number {
+  font-size: 1.8rem !important; /* Tamaño mucho más pequeño */
+  margin-bottom: 0;
+}
+
+.mini-stats .stat-text {
+  font-size: 0.7rem; /* Texto descriptivo más compacto */
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .mini-stats {
+    grid-template-columns: repeat(3, 1fr); /* Mantenemos horizontal en móvil por ser pequeño */
+    gap: 8px;
+  }
+  .mini-stats .stat-number {
+    font-size: 1.4rem !important;
+  }
+}
