@@ -36,10 +36,22 @@
       y: 100, scale: 1.1
     });
 
-    ScrollTrigger.batch(".section h2, .service-box, .curso-content", {
-      onEnter: batch => gsap.from(batch, {
-        y: 30, opacity: 0, stagger: 0.15, duration: 0.8, ease: "power2.out"
-      })
+    ScrollTrigger.batch(".service-box, .section h2, .curso-content", {
+      onEnter: batch => gsap.fromTo(batch, 
+        { 
+          y: 30, 
+          opacity: 0 
+        }, 
+        { 
+          y: 0, 
+          opacity: 1, // Forzamos el 100% de opacidad
+          stagger: 0.15, 
+          duration: 0.8, 
+          ease: "power2.out",
+          overwrite: true 
+        }
+      ),
+      start: "top 85%", // Se activa cuando la sección entra un 15% en pantalla
     });
 
     const trigger = document.getElementById('toggle-arrow');

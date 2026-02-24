@@ -62,11 +62,27 @@ body {
 .service-box {
   background: #1c1c1c; padding: 35px; border-radius: 12px;
   border: 1px solid #333; transition: var(--transition);
+  cursor: pointer;
+  user-select: none; /* Evita seleccionar texto al hacer clic rápido */
 }
 
 .service-box:hover {
   border-color: var(--primary); transform: translateY(-10px);
   box-shadow: 0 10px 30px rgba(0, 79, 255, 0.2);
+}
+
+/* Efecto Click (Desktop y Mobile) - Iluminación en Blanco */
+.service-box:active {
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+  transform: scale(0.98); /* Ligero efecto de pulsación */
+}
+
+/* Asegurar que el contenido sea legible cuando el fondo cambie a blanco */
+.service-box:active h3,
+.service-box:active p {
+  color: #151515 !important;
 }
 
 .expand-trigger { cursor: pointer; font-size: 2rem; color: var(--primary); margin-top: 30px; }
