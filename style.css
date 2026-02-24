@@ -259,13 +259,43 @@ body::before {
   transform: scale(1);
 }
 
+/* ... arriba están los estilos de la lightbox ... */
 .lightbox-close {
   position: absolute;
   top: 30px;
   right: 40px;
-  color: rgb(0, 0, 0);
+  color: white; /* Cambiado a blanco para que se vea */
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+} /* <-- ESTA LLAVE DEBE CERRAR AQUÍ */
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
 }
 
+.stat-item {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-number {
+  font-size: clamp(3rem, 5vw, 4.5rem) !important;
+  color: var(--primary) !important;
+  margin-bottom: 10px;
+  font-weight: 800;
+  opacity: 1 !important; /* Aseguramos 100% opacidad según tu instrucción */
+}
+
+.stat-text {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(235, 232, 223, 0.8);
+}
+/* ELIMINA CUALQUIER LLAVE EXTRA AL FINAL DEL ARCHIVO */

@@ -103,34 +103,54 @@
     });
     scrollBtn.addEventListener('click', () => lenis.scrollTo(0));
 
-    // --- Lógica de la Lightbox (Corregida para Clones) ---
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+    // --- Lógica de la Lightbox ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
 
-if (lightbox && lightboxImg) {
-  // Escuchamos el clic en cualquier parte del documento
-  document.addEventListener('click', (e) => {
-    // Verificamos si lo que clickeamos es una imagen dentro de un carousel-item
-    if (e.target.matches('.carousel-item img')) {
-      lightbox.style.display = 'flex';
-      
-      // Forzamos un pequeño delay para que la transición de opacidad funcione
-      setTimeout(() => lightbox.classList.add('active'), 10);
-      
-      lightboxImg.src = e.target.src;
-      document.body.style.overflow = 'hidden'; // Bloquea scroll
+    if (lightbox && lightboxImg) {
+      document.addEventListener('click', (e) => {
+        if (e.target.matches('.carousel-item img')) {
+          lightbox.style.display = 'flex';
+          setTimeout(() => lightbox.classList.add('active'), 10);
+          lightboxImg.src = e.target.src;
+          document.body.style.overflow = 'hidden';
+        }
+      });
+
+      lightbox.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        setTimeout(() => {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }, 300);
+      });
     }
-  });
 
-  // Cerrar la Lightbox
-  lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-    setTimeout(() => {
-      lightbox.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Devuelve scroll
-    }, 300);
-  });
-}
+    // --- Lógica de Contadores (FUERA del IF de la lightbox) ---
+    const stats = document.querySelectorAll(".stat-number");
 
-  });
-})();
+    stats.forEach((stat) => {
+      const target = +stat.getAttribute("data-target");
+      const isPlus = stat.innerText.includes("+");
+
+      ScrollTrigger.create({
+        trigger: stat,
+        start: "top 90%", 
+        onEnter: () => {
+          gsap.to(stat, {
+            innerText: target,
+            duration: 2.5,
+            snap: { innerText: 1 },
+            ease: "power2.out",
+            onUpdate: function() {
+              // Actualiza el texto manteniendo el signo +
+              stat.innerHTML = (isPlus ? "+" : "") + Math.floor(stat.innerText);
+            }
+          });
+        },
+        once: true
+      });
+    });
+
+  }); // Cierre de DOMContentLoaded
+})(); // Cierre de la función anónima
