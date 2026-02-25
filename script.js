@@ -127,33 +127,38 @@
     }
 
 
-    // --- Lógica de Contadores Animados Corregida ---
+// --- Lógica de Contadores Animados Corregida ---
 const stats = document.querySelectorAll(".stat-number");
 
 stats.forEach((stat) => {
-  const targetValue = +stat.getAttribute("data-target"); // Obtenemos el valor final del atributo data-target
-  const hasPlus = stat.textContent.includes("+");// Detectamos si el texto original tiene un "+"
+  // Obtenemos el valor final del atributo data-target
+  const targetValue = +stat.getAttribute("data-target");
+  // Detectamos si el texto original tiene un "+"
+  const hasPlus = stat.textContent.includes("+");
 
   ScrollTrigger.create({
     trigger: stat,
-    start: "top 95%", 
+    start: "top 90%", 
     onEnter: () => {
-      let countObj = { val: 0 }; // Creamos un objeto temporal para que GSAP anime el número limpiamente
+      // Creamos un objeto temporal para que GSAP anime el número limpiamente
+      let countObj = { val: 0 };
+      
       gsap.to(countObj, {
         val: targetValue,
         duration: 2.5,
         ease: "power2.out",
         onUpdate: function() {
-          stat.innerText = (hasPlus ? "+" : "") + Math.floor(countObj.val); // Renderizamos el número redondeado y añadimos el "+" si es necesario
+          // Renderizamos el número redondeado y añadimos el "+" si es necesario
+          stat.innerText = (hasPlus ? "+" : "") + Math.floor(countObj.val);
         },
         onComplete: function() {
-          stat.innerText = (hasPlus ? "+" : "") + targetValue; // Al terminar, aseguramos el valor exacto final
+          // Al terminar, aseguramos el valor exacto final
+          stat.innerText = (hasPlus ? "+" : "") + targetValue;
         }
       });
     },
     once: true 
   });
 });
-
   }); // Cierre de DOMContentLoaded
 })(); // Cierre de la función anónima
