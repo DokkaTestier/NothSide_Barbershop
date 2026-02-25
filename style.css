@@ -341,3 +341,56 @@ body::before { /* Cuadrícula de fondo fija */
     font-size: 1.4rem !important;
   }
 }
+
+.promo-carousel {
+  position: relative;
+  width: 100%;
+  height: 350px; /* Altura fija para que no empuje el contenido bruscamente */
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+.promo-track {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.promo-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Solo para el contenedor del slide, el contenido interno será 100% visible cuando active */
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.promo-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5); /* Oscurece para que el texto destaque */
+}
+
+.promo-content {
+  position: absolute;
+  text-align: center;
+  z-index: 10;
+  /* Respetando tu preferencia de opacidad total en el texto */
+  opacity: 1 !important; 
+}
+
+.promo-content h3 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-transform: uppercase;
+}

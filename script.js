@@ -95,6 +95,26 @@
       // Para móviles, que no se detenga al tocar para no romper la fluidez
     }
 
+    // --- Lógica de Carrusel de Promociones (Banners) ---
+const promoSlides = document.querySelectorAll('.promo-slide');
+let currentPromo = 0;
+
+if (promoSlides.length > 0) {
+  function nextPromo() {
+    // Quitamos la clase al slide actual
+    promoSlides[currentPromo].classList.remove('active');
+    
+    // Calculamos el siguiente índice
+    currentPromo = (currentPromo + 1) % promoSlides.length;
+    
+    // Agregamos la clase al nuevo slide
+    promoSlides[currentPromo].classList.add('active');
+  }
+
+  // Cambia cada 5 segundos
+  setInterval(nextPromo, 5000);
+}
+
 
     const scrollBtn = document.getElementById('scrollTopBtn');
     window.addEventListener('scroll', () => {
@@ -125,6 +145,8 @@
         }, 300);
       });
     }
+
+    
 
 
 // --- Lógica de Contadores Animados Corregida ---
