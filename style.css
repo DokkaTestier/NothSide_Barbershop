@@ -1,21 +1,107 @@
-:root {
+/* =========================================================
+   CSS ARCHITECTURE: reset → tokens → base → layout → components → utilities
+   ========================================================= */
+
+@layer reset, tokens, base, layout, components, utilities;
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+@layer reset {
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+}
+
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+@layer tokens {
+  :root {
   --primary: #0051ff;
   --bg: #151515;
   --text: #EBE8DF;
   --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body { /* */
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overscroll-behavior-y: none;
-  line-height: 1.5;
-  overflow-x: hidden;
 }
 
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+@layer base{
+
+html {
+  scroll-behavior: smooth;
+  background-color: #111111;
+}
+
+body { /* Background */
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--color-bg);
+
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+
+  overscroll-behavior-y: none;
+}
+
+body::before { /* Background grid */
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+@layer layout {
+/* container */
+
+/* sections */
+.section { padding: 100px 25px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.section h2 { color: var(--primary); font-size: 2.5rem; margin-bottom: 40px; }
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+@layer components {
+  
 .header {
   position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
   transition: var(--transition);
@@ -45,6 +131,14 @@ body { /* */
 
 .hamburger { display: none; background: none; border: none; color: white; cursor: pointer; }
 
+
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
 .hero {
   height: 100vh; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/hero-image_back.jpg') center/cover;
@@ -54,11 +148,59 @@ body { /* */
 .hero-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; line-height: 1; }
 .hero-subtitle { margin: 20px 0 40px; color: rgba(235, 232, 223, 0.7); }
 
-.section { padding: 100px 25px; max-width: 1200px; margin: 0 auto; text-align: center; }
-.section h2 { color: var(--primary); font-size: 2.5rem; margin-bottom: 40px; }
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.btn {
+  padding: 14px 30px; background: var(--primary); color: white;
+  text-decoration: none; border-radius: 4px; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 10px; transition: var(--transition);
+}
+.btn:hover { background: white; color: var(--bg); transform: scale(1.05); }
+
+.footer { padding: 40px; text-align: center; border-top: 1px solid #333; }
+
+
+.scroll-top-btn {
+  position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px;
+  border-radius: 50%; background: var(--primary); color: white;
+  border: none; display: none; z-index: 100; cursor: pointer;
+}
+
+/* --- Ajustes de Contacto --- */
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;     /* Permite que los botones bajen si no caben */
+  justify-content: center;
+  gap: 15px;           /* Crea la separación que faltaba */
+  margin-top: 20px;
+}
+
+/* --- Centrar específicamente el Botón del Temario --- */
+.curso-content .btn {
+  margin: 30px auto 0 auto; /* El 'auto' a los lados lo centra horizontalmente */
+  display: inline-flex;
+}
+
+
+.contact-buttons .btn {
+  width: 100%;           /* Hace que los botones ocupen el ancho disponible */
+  max-width: 300px;      /* Pero con un límite para que no se vean gigantes */
+  justify-content: center;
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
 
 .services-boxes {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  grid-auto-rows: 1fr;
 }
 
 .service-box {
@@ -73,7 +215,6 @@ body { /* */
 .service-box:hover {
   background: rgba(28, 28, 28, 0.8);
   border-color: var(--primary);
-  /* Sombra más suave y extendida */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 79, 255, 0.1);
 }
 
@@ -88,117 +229,15 @@ body { /* */
 /* Asegurar que el contenido sea legible cuando el fondo cambie a blanco */
 .service-box:active h3,
 .service-box:active p {
-  color: #151515 !important;
+  color: #151515;
 }
 
 .expand-trigger { cursor: pointer; font-size: 2rem; color: var(--primary); margin-top: 30px; }
 
-/* Contenedor del Carrusel */
-.carousel-container {
-  width: 100%;
-  overflow: hidden;
-  padding: 40px 0;
-  position: relative;
-}
 
-/* El track ahora será manejado puramente por GSAP */
-.carousel-track {
-  display: flex;
-  gap: 20px;
-  width: max-content; /* Importante para que no se colapse */
-  will-change: transform;
-}
-
-.carousel-item {
-  flex: 0 0 280px; /* Mantenemos el ancho fijo que elegiste */
-  height: 380px;   /* Mantenemos el alto */
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  /* Evita que el contenedor se deforme */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000; /* Fondo negro por si la imagen es más delgada */
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
-  object-position: center;
-  display: block;
-  pointer-events: auto; 
-  cursor: zoom-in;
-}
-
-@media (max-width: 768px) {
-  .carousel-item {
-    flex: 0 0 220px; /* Reducimos el ancho en mobile para que se vean más fotos */
-    height: 300px;   /* Reducimos el alto proporcionalmente */
-  }
-}
-
-.btn {
-  padding: 14px 30px; background: var(--primary); color: white;
-  text-decoration: none; border-radius: 4px; font-weight: 700;
-  display: inline-flex; align-items: center; gap: 10px; transition: var(--transition);
-}
-.btn:hover { background: white; color: var(--bg); transform: scale(1.05); }
-
-.footer { padding: 40px; text-align: center; border-top: 1px solid #333; }
-
-@media (max-width: 768px) {
-  .hamburger { display: block; }
-  #nav-links {
-    position: fixed; top: 0; right: -100%; height: 100vh; width: 75%;
-    background: #111; flex-direction: column; justify-content: center;
-    align-items: center; transition: 0.4s; z-index: 1000;
-  }
-  #nav-links.nav-active { right: 0; border-left: 1px solid #333; }
-}
-
-.scroll-top-btn {
-  position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px;
-  border-radius: 50%; background: var(--primary); color: white;
-  border: none; display: none; z-index: 100; cursor: pointer;
-}
-
-html {
-  background-color: #111111;
-  scroll-behavior: smooth;
-}
-
-body { /*BG que centra todo*/
-  font-family: 'Inter', sans-serif;
-  background-color: #11111100 !important;
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-  position: relative;
-}
-
-body::before { /* Cuadrícula de fondo fija */
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* --- Ajustes de Contacto --- */
-.contact-buttons {
-  display: flex;
-  flex-wrap: wrap;     /* Permite que los botones bajen si no caben */
-  justify-content: center;
-  gap: 15px;           /* Crea la separación que faltaba */
-  margin-top: 20px;
-}
+/* =========================================================
+   PROMO
+   ========================================================= */
 
 /* --- Ajustes del Contenido del Curso --- */
 .curso-content {
@@ -208,138 +247,6 @@ body::before { /* Cuadrícula de fondo fija */
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Alinea el contenido inicial a la izquierda */
-}
-
-/* --- Centrar específicamente el Botón del Temario --- */
-.curso-content .btn {
-  margin: 30px auto 0 auto; /* El 'auto' a los lados lo centra horizontalmente */
-  display: inline-flex;
-}
-
-/* --- Ajuste extra para Mobile (Media Query) --- */
-@media (max-width: 768px) {
-  .contact-buttons {
-    flex-direction: column; /* Los pone uno sobre otro en celulares */
-    align-items: center;
-  }
-  
-  .contact-buttons .btn {
-    width: 100%;           /* Hace que los botones ocupen el ancho disponible */
-    max-width: 300px;      /* Pero con un límite para que no se vean gigantes */
-    justify-content: center;
-  }
-}
-
-/* --- Estilos de la Lightbox --- */
-.lightbox {
-  display: none; /* Oculta por defecto */
-  position: fixed;
-  z-index: 2000; /* Por encima de todo */
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.95); /* Fondo casi negro */
-  backdrop-filter: blur(10px);
-  justify-content: center;
-  align-items: center;
-  cursor: zoom-out;
-}
-
-.lightbox-content {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-
-.lightbox.active .lightbox-content {
-  transform: scale(1);
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  color: #ffffff !important; /* Blanco puro */
-  font-size: 50px; /* Más grande para dedos */
-  z-index: 2001;
-  cursor: pointer;
-  line-height: 1;
-}
-
-/* --- Estadísticas Alineadas Horizontalmente --- */
-.stats-container {
-  display: grid;
-  /* Forzamos 3 columnas iguales en desktop */
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 30px;
-  margin-top: 50px;
-  max-width: 1000px; /* Centra el bloque para que no se estire demasiado */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.stat-item {
-  padding: 30px 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.stat-number {
-  font-size: clamp(2.5rem, 4vw, 4rem) !important; /* Ajuste de tamaño para que quepan bien */
-  color: var(--primary) !important;
-  margin-bottom: 5px;
-  font-weight: 800;
-  opacity: 1 !important; /* Mantenemos tu regla de 100% opacidad */
-}
-
-/* --- Ajuste para Mobile --- */
-@media (max-width: 768px) {
-  .stats-container {
-    /* En celulares volvemos a una sola columna para que no se amontonen */
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-/* Contenedor reducido para integrarse en texto */
-.mini-stats {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin: 20px 0; /* Espacio entre los párrafos del curso */
-  width: 100%;
-}
-
-.mini-stats .stat-item {
-  padding: 15px 10px;
-  background: rgba(255, 255, 255, 0.02); /* Más sutil */
-  border-radius: 8px;
-}
-
-.mini-stats .stat-number {
-  font-size: 1.8rem !important; /* Tamaño mucho más pequeño */
-  margin-bottom: 0;
-}
-
-.mini-stats .stat-text {
-  font-size: 0.7rem; /* Texto descriptivo más compacto */
-  letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-  .mini-stats {
-    grid-template-columns: repeat(3, 1fr); /* Mantenemos horizontal en móvil por ser pequeño */
-    gap: 8px;
-  }
-  .mini-stats .stat-number {
-    font-size: 1.4rem !important;
-  }
 }
 
 .promo-carousel {
@@ -384,9 +291,8 @@ body::before { /* Cuadrícula de fondo fija */
 .promo-content {
   position: absolute;
   text-align: center;
-  z-index: 10;
-  /* Respetando tu preferencia de opacidad total en el texto */
-  opacity: 1 !important; 
+  z-index: 10; /* Respetando tu preferencia de opacidad total en el texto */
+  opacity: 1; 
 }
 
 .promo-content h3 {
@@ -394,3 +300,203 @@ body::before { /* Cuadrícula de fondo fija */
   color: var(--primary);
   text-transform: uppercase;
 }
+
+
+/* =========================================================
+   CAROUSEL
+   ========================================================= */
+
+/* Contenedor del Carrusel */
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  position: relative;
+}
+
+/* El track ahora será manejado puramente por GSAP */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content; /* Importante para que no se colapse */
+  will-change: transform;
+}
+
+.carousel-item {
+  flex: 0 0 280px; /* Mantenemos el ancho fijo que elegiste */
+  height: 380px;   /* Mantenemos el alto */
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Evita que el contenedor se deforme */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000; /* Fondo negro por si la imagen es más delgada */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center;
+  display: block;
+  pointer-events: auto; 
+  cursor: zoom-in;
+}
+
+
+/* =========================================================
+   LIGHTBOX
+   ========================================================= */
+
+/* --- Estilos de la Lightbox --- */
+
+.lightbox {
+  display: none; /* Oculta por defecto */
+  position: fixed;
+  z-index: 2000; /* Por encima de todo */
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.95); /* Fondo casi negro */
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.lightbox.active .lightbox-content {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: #ffffff; /* Blanco puro */
+  font-size: 50px; /* Más grande para dedos */
+  z-index: 2001;
+  cursor: pointer;
+  line-height: 1;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+/* --- Estadísticas Alineadas Horizontalmente --- */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  margin-top: 50px;
+  max-width: 1000px; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-item {
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-number {
+  font-size: clamp(2.5rem, 4vw, 4rem); /* Ajuste de tamaño para que quepan bien */
+  color: var(--primary) ;
+  margin-bottom: 5px;
+  font-weight: 800;
+  opacity: 1; /* Mantenemos tu regla de 100% opacidad */
+}
+
+/* Contenedor reducido para integrarse en texto */
+.mini-stats {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0; /* Espacio entre los párrafos del curso */
+  width: 100%;
+}
+
+.mini-stats .stat-item {
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.02); /* Más sutil */
+  border-radius: 8px;
+}
+
+.mini-stats .stat-number {
+  font-size: 1.8rem ; /* Tamaño mucho más pequeño */
+  margin-bottom: 0;
+}
+
+.mini-stats .stat-text {
+  font-size: 0.7rem; /* Texto descriptivo más compacto */
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+   
+@layer utilities {
+
+  @media (max-width: 768px) {
+    .carousel-item {
+      flex: 0 0 220px; /* Reducimos el ancho en mobile para que se vean más fotos */
+      height: 300px;   /* Reducimos el alto proporcionalmente */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    #nav-links {
+      position: fixed; top: 0; right: -100%; height: 100vh; width: 75%;
+      background: #111; flex-direction: column; justify-content: center;
+      align-items: center; transition: 0.4s; z-index: 1000;
+    }
+    #nav-links.nav-active { right: 0; border-left: 1px solid #333; }
+  }
+
+  /* --- Ajuste extra para Mobile (Media Query) --- */
+  @media (max-width: 768px) {
+    .contact-buttons {
+      flex-direction: column; /* Los pone uno sobre otro en celulares */
+      align-items: center;
+    }
+  }
+
+  /* --- Ajuste para Mobile --- */
+  @media (max-width: 768px) {
+    .stats-container { /* En celulares volvemos a una sola columna para que no se amontonen */
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .mini-stats {
+      grid-template-columns: repeat(3, 1fr); /* Mantenemos horizontal en móvil por ser pequeño */
+      gap: 8px;
+    }
+    .mini-stats .stat-number {
+      font-size: 1.4rem;
+    }
+  }
+
+}
+
+/* ========================================================================================= */
