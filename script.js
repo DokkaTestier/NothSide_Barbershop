@@ -1,186 +1,219 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
-    
+
+    // ─── Icons ────────────────────────────────────────────────
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    const lenis = new Lenis();
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+    // ─── Detect mobile ────────────────────────────────────────
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+      || window.matchMedia("(max-width: 768px)").matches;
 
+    // ─── Lenis smooth scroll (desktop only) ───────────────────
+    let lenis = null;
+    if (!isMobile && typeof Lenis !== 'undefined') {
+      lenis = new Lenis();
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+    }
+
+    function scrollToTop() {
+      if (lenis) lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ─── Hamburger nav ────────────────────────────────────────
     const hamburger = document.getElementById('hamburger-btn');
-    const navLinks = document.getElementById('nav-links');
-    const icon = hamburger?.querySelector('i');
+    const navLinks  = document.getElementById('nav-links');
+    const overlay   = document.getElementById('nav-overlay');
+    const icon      = hamburger?.querySelector('i');
+
+    function closeNav() {
+      navLinks?.classList.remove('nav-active');
+      overlay?.classList.remove('active');
+      if (icon) { icon.setAttribute('data-lucide', 'menu'); lucide.createIcons(); }
+    }
 
     if (hamburger && navLinks) {
       hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('nav-active');
-        const active = navLinks.classList.contains('nav-active');
+        const isOpen = navLinks.classList.toggle('nav-active');
+        overlay?.classList.toggle('active', isOpen);
         if (icon) {
-          icon.setAttribute('data-lucide', active ? 'x' : 'menu');
+          icon.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
           lucide.createIcons();
         }
       });
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('nav-active');
-          if (icon) icon.setAttribute('data-lucide', 'menu');
-          lucide.createIcons();
-        });
+      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
+      overlay?.addEventListener('click', closeNav);
+    }
+
+    // ─── GSAP ─────────────────────────────────────────────────
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero parallax — disabled on mobile to avoid GSAP/Lenis conflicts
+    if (!isMobile) {
+      gsap.to(".hero", {
+        scrollTrigger: { trigger: ".hero", start: "top top", scrub: true },
+        y: 80,
+        scale: 1.06,
+        ease: "none",
       });
     }
 
-    gsap.registerPlugin(ScrollTrigger);
+    // Fade-in sections
+    // Use a simpler approach on mobile (CSS class toggle) to avoid GSAP issues
+    if (!isMobile) {
+      ScrollTrigger.batch(".service-box, .section h2, .curso-feature, .about-text, .contact-buttons", {
+        onEnter: batch => gsap.fromTo(batch,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: "power2.out", overwrite: true }
+        ),
+        start: "top 88%",
+      });
+    } else {
+      // On mobile: simple CSS-driven reveal, no GSAP transforms
+      const revealEls = document.querySelectorAll(".service-box, .curso-feature, .about-text, .contact-buttons");
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = "1";
+            e.target.style.transform = "none";
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(el => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        el.style.transform = "translateY(16px)";
+        revealObserver.observe(el);
+      });
+    }
 
-    gsap.to(".hero", {
-      scrollTrigger: { trigger: ".hero", start: "top top", scrub: true },
-      y: 100, scale: 1.1
-    });
-
-    ScrollTrigger.batch(".service-box, .section h2, .curso-content", {
-      onEnter: batch => gsap.fromTo(batch, 
-        { 
-          y: 30, 
-          opacity: 0 
-        }, 
-        { 
-          y: 0, 
-          opacity: 1, // Forzamos el 100% de opacidad
-          stagger: 0.15, 
-          duration: 0.8, 
-          ease: "power2.out",
-          overwrite: true 
-        }
-      ),
-      start: "top 85%", // Se activa cuando la sección entra un 15% en pantalla
-    });
-
+    // ─── Services toggle ──────────────────────────────────────
     const trigger = document.getElementById('toggle-arrow');
-    const extra = document.getElementById('extra-services');
+    const extra   = document.getElementById('extra-services');
     if (trigger && extra) {
       trigger.addEventListener('click', () => {
         const isHidden = extra.style.display === 'none';
         extra.style.display = isHidden ? 'grid' : 'none';
         trigger.innerHTML = `<i data-lucide="${isHidden ? 'chevron-up' : 'chevron-down'}"></i>`;
         lucide.createIcons();
+        // Refresh ScrollTrigger if new boxes appeared (desktop)
+        if (!isMobile && isHidden) ScrollTrigger.refresh();
       });
     }
 
-
-    const track = document.querySelector(".carousel-track");
+    // ─── Carousel infinito (Trabajos) ─────────────────────────
+    const track  = document.querySelector(".carousel-track");
     const slides = Array.from(document.querySelectorAll(".carousel-item"));
 
     if (track && slides.length > 0) {
-      // 1. Clonamos los elementos para crear el efecto infinito
-      slides.forEach(slide => {
-        const clone = slide.cloneNode(true);
-        track.appendChild(clone);
-      });
+      // Clone slides for infinite effect
+      slides.forEach(slide => track.appendChild(slide.cloneNode(true)));
 
-      // 2. Calculamos el ancho total de una vuelta
-      const totalWidth = (slides[0].offsetWidth + 20) * slides.length; // 20 es el gap
+      const gap = 16;
+      // Use a callback to ensure images might have loaded sizes
+      const init = () => {
+        const slideW = slides[0].offsetWidth + gap;
+        const totalW = slideW * slides.length;
 
-      // 3. Creamos la animación infinita
-      const animation = gsap.to(track, {
-        x: -totalWidth,
-        duration: 25, // Ajusta la velocidad (más segundos = más lento)
-        ease: "none",
-        repeat: -1,
-        paused: false
-      });
+        const anim = gsap.to(track, {
+          x: -totalW,
+          duration: 28,
+          ease: "none",
+          repeat: -1,
+        });
 
-      // 4. Interaction: Se detiene un poco al pasar el mouse (opcional, estilo Apple)
-      track.addEventListener("mouseenter", () => gsap.to(animation, {timeScale: 0.2, duration: 0.5}));
-      track.addEventListener("mouseleave", () => gsap.to(animation, {timeScale: 1, duration: 0.5}));
-  
-      // Para móviles, que no se detenga al tocar para no romper la fluidez
+        // Slow on hover (desktop) / don't interfere on mobile
+        if (!isMobile) {
+          track.addEventListener("mouseenter", () => gsap.to(anim, { timeScale: 0.2, duration: 0.5 }));
+          track.addEventListener("mouseleave", () => gsap.to(anim, { timeScale: 1, duration: 0.5 }));
+        }
+      };
+
+      // Small delay to let layout settle
+      setTimeout(init, 100);
     }
 
-    // --- Lógica de Carrusel de Promociones (Banners) ---
-const promoSlides = document.querySelectorAll('.promo-slide');
-let currentPromo = 0;
+    // ─── Promo carousel ───────────────────────────────────────
+    const promoSlides = document.querySelectorAll('.promo-slide');
+    const promoDots   = document.querySelectorAll('.promo-dot');
+    let currentPromo  = 0;
 
-if (promoSlides.length > 0) {
-  function nextPromo() {
-    // Quitamos la clase al slide actual
-    promoSlides[currentPromo].classList.remove('active');
-    
-    // Calculamos el siguiente índice
-    currentPromo = (currentPromo + 1) % promoSlides.length;
-    
-    // Agregamos la clase al nuevo slide
-    promoSlides[currentPromo].classList.add('active');
-  }
+    function goToPromo(idx) {
+      promoSlides[currentPromo].classList.remove('active');
+      promoDots[currentPromo]?.classList.remove('active');
+      currentPromo = idx % promoSlides.length;
+      promoSlides[currentPromo].classList.add('active');
+      promoDots[currentPromo]?.classList.add('active');
+    }
 
-  // Cambia cada 5 segundos
-  setInterval(nextPromo, 5000);
-}
+    if (promoSlides.length > 0) {
+      setInterval(() => goToPromo(currentPromo + 1), 5000);
+      promoDots.forEach((dot, i) => dot.addEventListener('click', () => goToPromo(i)));
+    }
 
-
+    // ─── Scroll events ────────────────────────────────────────
     const scrollBtn = document.getElementById('scrollTopBtn');
-    window.addEventListener('scroll', () => {
-      scrollBtn.style.display = window.scrollY > 600 ? 'block' : 'none';
-      document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
-    });
-    scrollBtn.addEventListener('click', () => lenis.scrollTo(0));
+    const header    = document.querySelector('.header');
 
-    // --- Lógica de la Lightbox ---
-    const lightbox = document.getElementById('lightbox');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (scrollBtn) scrollBtn.style.display = y > 600 ? 'flex' : 'none';
+      header?.classList.toggle('scrolled', y > 50);
+    }, { passive: true });
+
+    scrollBtn?.addEventListener('click', scrollToTop);
+
+    // ─── Lightbox ─────────────────────────────────────────────
+    const lightbox    = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
 
     if (lightbox && lightboxImg) {
       document.addEventListener('click', (e) => {
         if (e.target.matches('.carousel-item img')) {
           lightbox.style.display = 'flex';
-          setTimeout(() => lightbox.classList.add('active'), 10);
+          requestAnimationFrame(() => lightbox.classList.add('active'));
           lightboxImg.src = e.target.src;
           document.body.style.overflow = 'hidden';
         }
       });
 
-      lightbox.addEventListener('click', () => {
+      function closeLightbox() {
         lightbox.classList.remove('active');
         setTimeout(() => {
           lightbox.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        }, 300);
+          document.body.style.overflow = '';
+        }, 350);
+      }
+
+      lightbox.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
       });
     }
 
-    
+    // ─── Animated counters ────────────────────────────────────
+    document.querySelectorAll(".stat-number").forEach((stat) => {
+      const targetValue = +stat.getAttribute("data-target");
+      const hasPlus = stat.textContent.includes("+");
 
-
-// --- Lógica de Contadores Animados Corregida ---
-const stats = document.querySelectorAll(".stat-number");
-
-stats.forEach((stat) => {
-  // Obtenemos el valor final del atributo data-target
-  const targetValue = +stat.getAttribute("data-target");
-  // Detectamos si el texto original tiene un "+"
-  const hasPlus = stat.textContent.includes("+");
-
-  ScrollTrigger.create({
-    trigger: stat,
-    start: "top 90%", 
-    onEnter: () => {
-      // Creamos un objeto temporal para que GSAP anime el número limpiamente
-      let countObj = { val: 0 };
-      
-      gsap.to(countObj, {
-        val: targetValue,
-        duration: 2.5,
-        ease: "power2.out",
-        onUpdate: function() {
-          // Renderizamos el número redondeado y añadimos el "+" si es necesario
-          stat.innerText = (hasPlus ? "+" : "") + Math.floor(countObj.val);
+      ScrollTrigger.create({
+        trigger: stat,
+        start: "top 92%",
+        onEnter: () => {
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetValue,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate() { stat.innerText = (hasPlus ? "+" : "") + Math.floor(obj.val); },
+            onComplete() { stat.innerText = (hasPlus ? "+" : "") + targetValue; }
+          });
         },
-        onComplete: function() {
-          // Al terminar, aseguramos el valor exacto final
-          stat.innerText = (hasPlus ? "+" : "") + targetValue;
-        }
+        once: true
       });
-    },
-    once: true 
-  });
-});
-  }); // Cierre de DOMContentLoaded
-})(); // Cierre de la función anónima
+    });
+
+  }); // DOMContentLoaded
+})();

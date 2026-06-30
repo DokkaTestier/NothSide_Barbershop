@@ -8,190 +8,257 @@
   <meta name="description" content="NSB Web - Expertos en cortes, barba y formación profesional en Tecamac.">
   <link rel="icon" href="img/favicon.png" type="image/png">
   
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#0e0e0e">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis solo se carga en desktop -->
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
 
+  <!-- Nav overlay for mobile -->
+  <div class="nav-overlay" id="nav-overlay"></div>
+
   <header class="header">
     <div class="container-header"> 
       <img src="img/NorthSideRacing_variant.png" alt="NSR Logo" class="logo">
-      <button class="hamburger" id="hamburger-btn">
+      <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú">
         <i data-lucide="menu"></i>
       </button>
-      <nav id="nav-links">
-        <a href="#inicio">• Inicio</a>
-        <a href="#servicios">• Servicios</a>
-        <a href="#cursos">• Cursos</a>
-        <a href="#nosotros">• Nosotros</a>
-        <a href="#contacto">• Contacto</a>
-        <a href="#faq">• FAQ</a>
+      <nav id="nav-links" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#cursos">Cursos</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#faq">FAQ</a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section id="inicio" class="hero">
       <div class="hero-overlay">
+        <p class="hero-eyebrow">Tecamac, México · Desde 2020</p>
         <h1 class="hero-title">
-          <span style="color: #004fff;">FIVE</span>
-          <span style="color: #EBE8DF;">YEARS IN<br />THE GAME</span>
+          <span class="line-blue">FIVE</span>
+          <span class="line-white">YEARS IN<br>THE GAME</span>
         </h1>
         <p class="hero-subtitle">
-          <span style="color: rgba(235, 232, 223, 0.6);">NUESTRO DIFERENCIADOR<br/></span>
-          NUESTRO EQUIPO DE <br> ESPECIALISTAS.
+          Nuestro diferenciador:<br>
+          <strong>Nuestro equipo de especialistas.</strong>
         </p>
-        <a href="#contacto" class="btn">Contáctanos</a>
+        <div class="hero-cta">
+          <a href="#contacto" class="btn">Contáctanos</a>
+          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+        </div>
       </div>
     </section>
 
+    <!-- PROMOS -->
     <section id="promos" class="promo-carousel">
-  <div class="promo-track">
-    <div class="promo-slide active">
-      <img src="img/promo1.jpg" alt="Promo 1">
-      <div class="promo-content">
-        <span>OFERTA DE MES</span>
-        <h3>Corte + Barba 20% OFF</h3>
+      <div class="promo-track">
+        <div class="promo-slide active">
+          <img src="img/promo1.jpg" alt="Promo 1">
+          <div class="promo-content">
+            <span>Oferta del mes</span>
+            <h3>Corte + Barba<br>20% OFF</h3>
+          </div>
+        </div>
+        <div class="promo-slide">
+          <img src="img/promo2.jpg" alt="Promo 2">
+          <div class="promo-content">
+            <span>Cursos</span>
+            <h3>Inscríbete hoy y recibe<br>kit de bienvenida</h3>
+          </div>
+        </div>
+        <div class="promo-slide">
+          <img src="img/promo3.jpg" alt="Promo 3">
+          <div class="promo-content">
+            <span>Productos</span>
+            <h3>Pomadas 2x1<br>los días Jueves</h3>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="promo-slide">
-      <img src="img/promo2.jpg" alt="Promo 2">
-      <div class="promo-content">
-        <span>CURSOS</span>
-        <h3>Inscríbete hoy y recibe kit de bienvenida</h3>
+      <!-- Dots -->
+      <div class="promo-dots" role="tablist" aria-label="Promociones">
+        <button class="promo-dot active" aria-label="Promo 1"></button>
+        <button class="promo-dot" aria-label="Promo 2"></button>
+        <button class="promo-dot" aria-label="Promo 3"></button>
       </div>
-    </div>
-    <div class="promo-slide">
-      <img src="img/promo3.jpg" alt="Promo 3">
-      <div class="promo-content">
-        <span>PRODUCTOS</span>
-        <h3>Pomadas 2x1 los días Jueves</h3>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
+    <div class="section-divider"></div>
+
+    <!-- SERVICIOS -->
     <section id="servicios" class="section">
       <h2>Servicios</h2>
       <div class="services-boxes">
         <div class="service-box">
-          <h3>Cortes</h3>
+          <h3>✂️ Cortes</h3>
           <p>Corte clásico o moderno realizado con máquina o tijera. Degradado perfecto, texturizado o desfilado.</p>
         </div>
         <div class="service-box">
-          <h3>Barba y Ceja</h3>
+          <h3>🪒 Barba y Ceja</h3>
           <p>Mejoramos tu imagen con diseño, perfilado y afeitado con toalla caliente.</p>
         </div>
         <div class="service-box">
-          <h3>Curso de Barbería</h3>
+          <h3>🎓 Curso de Barbería</h3>
           <p>Aprende desde cero: cortes, degradados, barba, ceja, color y tendencias. Clases prácticas.</p>
         </div>
       </div>
 
-      <div class="services-boxes" id="extra-services" style="display: none; margin-top: 25px;">
+      <div class="services-boxes" id="extra-services" style="display: none; margin-top: 16px;">
         <div class="service-box">
-          <h3>Tratamiento</h3>
+          <h3>💆 Tratamiento</h3>
           <p>Hidratación capilar profunda, reconstrucción o limpieza facial, exfoliación y mascarillas.</p>
         </div>
         <div class="service-box">
-          <h3>Decoloración & Tintes</h3>
+          <h3>🎨 Decoloración & Tintes</h3>
           <p>Aplicación de colores vibrantes (como Arctic Fox, Pravana).</p>
         </div>
         <div class="service-box">
-          <h3>Trenzas</h3>
+          <h3>🧵 Trenzas</h3>
           <p>Trenzas básicas o con diseño, colores o estilos personalizados.</p>
         </div>
       </div>
 
-      <div class="expand-trigger" id="toggle-arrow">
+      <div class="expand-trigger" id="toggle-arrow" aria-label="Ver más servicios">
         <i data-lucide="chevron-down"></i>
       </div>
-      <p style="margin-top:20px; font-size: 0.9rem; color: gray;">Nuestros servicios pueden variar según horarios y disponibilidad.</p>
+      <p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">Servicios sujetos a disponibilidad y horario.</p>
     </section>
 
-    <section id="cursos" class="section">
-  <h2>Cursos</h2>
-  <div class="curso-content">
-    <p>🔥 <strong>Conviértete en un barbero completo.</strong></p><br>
-    <p>✅ <strong>Técnica profesional:</strong> Dominarás cortes, desvanecidos, diseño de barba, colorimetría y tratamientos.</p><br>
-    <p>✅ <strong>Visión de negocio:</strong> Te enseñamos a fotografiar tu trabajo, editarlo y gestionar redes sociales para atraer clientes.</p><br>
-    <p>✂️ Te enseñamos a cortar. Te formamos para triunfar.</p><br>
-    <div class="stats-container mini-stats">
-      <div class="stat-item">
-        <h2 class="stat-number" data-target="150">+0</h2>
-        <p class="stat-text">Graduados</p>
-      </div>
-      <div class="stat-item">
-        <h2 class="stat-number" data-target="5">0</h2>
-        <p class="stat-text">Años</p>
-      </div>
-      <div class="stat-item">
-        <h2 class="stat-number" data-target="2">+0</h2>
-        <p class="stat-text">Mentores</p>
-      </div>
-    </div>
-    <a href="assets/curso-barberia.pdf" download class="btn icon-btn">
-      <i data-lucide="book-open"></i> Descargar Temario 
-    </a>
-  </div>
-</section>
+    <div class="section-divider"></div>
 
+    <!-- CURSOS -->
+    <section id="cursos" class="section">
+      <h2>Cursos</h2>
+      <div class="curso-content">
+        <p class="curso-headline">🔥 Conviértete en un barbero completo.</p>
+
+        <div class="curso-feature">
+          <span class="curso-feature-icon">✅</span>
+          <div class="curso-feature-text">
+            <h4>Técnica profesional</h4>
+            <p>Dominarás cortes, desvanecidos, diseño de barba, colorimetría y tratamientos desde el primer día.</p>
+          </div>
+        </div>
+
+        <div class="curso-feature">
+          <span class="curso-feature-icon">📱</span>
+          <div class="curso-feature-text">
+            <h4>Visión de negocio</h4>
+            <p>Te enseñamos a fotografiar tu trabajo, editarlo y gestionar redes sociales para atraer clientes.</p>
+          </div>
+        </div>
+
+        <div class="curso-feature">
+          <span class="curso-feature-icon">✂️</span>
+          <div class="curso-feature-text">
+            <h4>Formación para triunfar</h4>
+            <p>No solo te enseñamos a cortar — te formamos para construir tu carrera en la barbería.</p>
+          </div>
+        </div>
+
+        <div class="stats-container mini-stats">
+          <div class="stat-item">
+            <h2 class="stat-number" data-target="150">+0</h2>
+            <p class="stat-text">Graduados</p>
+          </div>
+          <div class="stat-item">
+            <h2 class="stat-number" data-target="5">0</h2>
+            <p class="stat-text">Años</p>
+          </div>
+          <div class="stat-item">
+            <h2 class="stat-number" data-target="2">+0</h2>
+            <p class="stat-text">Mentores</p>
+          </div>
+        </div>
+
+        <a href="assets/curso-barberia.pdf" download class="btn icon-btn">
+          <i data-lucide="book-open"></i> Descargar Temario
+        </a>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- TRABAJOS -->
     <section id="trabajos" class="section">
       <h2>Nuestro Trabajo</h2>
       <div class="carousel-container">
         <div class="carousel-track">
-          <div class="carousel-item"><img src="img/trabajo1.jpg" alt="1"></div>
-          <div class="carousel-item"><img src="img/trabajo2.jpg" alt="2"></div>
-          <div class="carousel-item"><img src="img/trabajo3.jpg" alt="3"></div>
-          <div class="carousel-item"><img src="img/trabajo4.jpg" alt="4"></div>
-          <div class="carousel-item"><img src="img/trabajo5.jpg" alt="5"></div>
-          <div class="carousel-item"><img src="img/trabajo6.jpg" alt="6"></div>
-          <div class="carousel-item"><img src="img/trabajo7.jpg" alt="7"></div>
+          <div class="carousel-item"><img src="img/trabajo1.jpg" alt="Trabajo 1" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo2.jpg" alt="Trabajo 2" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo3.jpg" alt="Trabajo 3" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo4.jpg" alt="Trabajo 4" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo5.jpg" alt="Trabajo 5" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo6.jpg" alt="Trabajo 6" loading="lazy"></div>
+          <div class="carousel-item"><img src="img/trabajo7.jpg" alt="Trabajo 7" loading="lazy"></div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- NOSOTROS -->
     <section id="nosotros" class="section">
       <h2>Sobre Nosotros</h2>
-      <p style="max-width: 800px; margin: 0 auto;">
-        Nuestra visión es redefinir el arte de la barbería en México. Somos un equipo sólido en técnicas y diseño. No solo buscamos perfeccionar cada corte, sino crear una experiencia donde la pasión por el oficio se encuentra con herramientas innovadoras.
+      <p class="about-text">
+        Nuestra visión es <strong>redefinir el arte de la barbería en México.</strong> Somos un equipo sólido en técnicas y diseño. No solo buscamos perfeccionar cada corte, sino crear una experiencia donde la pasión por el oficio se encuentra con herramientas innovadoras.
       </p>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- CONTACTO -->
     <section id="contacto" class="section">
       <h2>Contacto</h2>
       <div class="contact-buttons">
-        <a href="https://www.instagram.com/northhsidemx_bs" target="_blank" class="btn icon-btn"><i data-lucide="instagram"></i> Instagram</a>
-        <a href="https://wa.me/525610505011" target="_blank" class="btn icon-btn"><i data-lucide="message-circle"></i> WhatsApp</a>
-        <a href="#" class="btn icon-btn"><i data-lucide="map-pin"></i> Ubicación</a>
+        <a href="https://www.instagram.com/northhsidemx_bs" target="_blank" rel="noopener" class="btn icon-btn">
+          <i data-lucide="instagram"></i> Instagram
+        </a>
+        <a href="https://wa.me/525610505011" target="_blank" rel="noopener" class="btn icon-btn">
+          <i data-lucide="message-circle"></i> WhatsApp
+        </a>
+        <a href="#" class="btn btn-ghost icon-btn">
+          <i data-lucide="map-pin"></i> Ubicación
+        </a>
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- FAQ -->
     <section id="faq" class="section">
       <h2>FAQ</h2>
-      <p>Descargar nuestros <a href="assets/terminos-condiciones.pdf" target="_blank" style="color: #004fff;">Términos y Condiciones NSB</a>.</p>
+      <p class="faq-note">
+        Consulta nuestros <a href="assets/terminos-condiciones.pdf" target="_blank">Términos y Condiciones NSB</a>.
+      </p>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© 2026 NSB Web. Todos los derechos reservados.</p>
+    <p>© 2026 <strong>NSB</strong> · Barbershop & Studio · Todos los derechos reservados.</p>
   </footer>
 
-  <button id="scrollTopBtn" class="scroll-top-btn"><i data-lucide="arrow-up"></i></button>
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <span class="lightbox-close" aria-label="Cerrar">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" alt="Trabajo ampliado">
+  </div>
 
   <script src="script.js"></script>
-
-  <div id="lightbox" class="lightbox">
-    <span class="lightbox-close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
-  </div>
 
 </body>
 </html>
